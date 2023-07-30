@@ -9,6 +9,33 @@ public class Kategori {
     private static final String tableName = "kategori";
     private Connection connectionPointer;
 
+    public static class Data {
+        int id;
+        String judul;
+        String versi;
+
+        public int getId() {
+            return id;
+        }
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getJudul() {
+            return judul;
+        }
+        public void setJudul(String judul) {
+            this.judul = judul;
+        }
+
+        public String getVersi() {
+            return versi;
+        }
+        public void setVersi(String versi) {
+            this.versi = versi;
+        }
+    }
+
     public int initDB(Connection connection){
         this.connectionPointer = connection;
         String[][] columns = new String[][]{
@@ -36,6 +63,7 @@ public class Kategori {
         }
         return 0x0;
     }
+
     public String readJudulKategori(int idKategori){
         String query = "SELECT judul FROM kategori WHERE id = " + String.valueOf(idKategori) + ";";
         try {
@@ -44,8 +72,27 @@ public class Kategori {
             ResultSet resultSet = statement.getResultSet();
             if (resultSet.next())
                 return resultSet.getString("judul");
-        } catch (SQLException e){
+        } catch (SQLException ignored){
 
+        }
+        return null;
+    }
+
+    public Kategori.Data readDataKategori(int idKategori){
+        String query = "SELECT * from pengeluaran";
+        Kategori.Data bufferData = new Kategori.Data();
+        try {
+            Statement statement = this.connectionPointer.createStatement();
+            statement.execute(query);
+            ResultSet resultSet = statement.getResultSet();
+            if (resultSet.next()){
+                bufferData.setId(resultSet.getInt("id"));
+                bufferData.setJudul(resultSet.getString("judul"));
+                bufferData.setVersi(resultSet.getString("versi"));
+            }
+            return bufferData;
+        } catch (SQLException ignored) {
+            
         }
         return null;
     }
