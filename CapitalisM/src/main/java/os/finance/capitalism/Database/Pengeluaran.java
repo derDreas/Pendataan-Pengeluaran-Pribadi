@@ -1,27 +1,34 @@
 package os.finance.capitalism.Database;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Pengeluaran {
-    private ArrayList<String> columns;
+    private final String tableName = "pengeluaran";
+    private String[][] columns;
 
-    public void initDB(){
-        columns = new ArrayList<>();
-        int columnsLength = 6;
-        String[][] listString = new String[columnsLength][2];
-        listString[0][1] = "judul";
-        listString[0][2] = "TEXT PRIMARY KEY NOT NULL";
+    public int initDB(Connection connection) {
+        StringBuilder createTableSql = new StringBuilder();
+        createTableSql.append("CREATE TABLE IF NOT EXISTS ").append(this.tableName).append(" (");
 
-        listString[0][1] = "kategori";
-        listString[0][2] = "INTEGER FOREIGN KEY(kategori)";
+        for (int i = 0; i < this.columns.length; i++) {
+            createTableSql.append(columns[i][0]).append(" ").append(columns[i][1]);
 
-        listString[0][1] = "jumlah";
-        listString[0][2] = "REAL";
+            if (i < this.columns.length - 1)
+                createTableSql.append(",\n");
+        }
 
-        listString[0][1] = "waktu";
-        listString[0][2] = "INTEGER";
+        createTableSql.append(");");
 
-        listString[0][1] = "versi";
-        listString[0][2] = "TEXT";
+        try {
+            Statement statement = connection.createStatement();
+            statement.execute(createTableSql.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0x1;
+        }
+
+        return 0x0;
     }
 }
