@@ -68,6 +68,7 @@ public class Pengeluaran {
             this.dbKategori.initDB(connection);
             this.connectionPointer = connection;
         }
+        this.dataArrayPengeluaran = new ArrayList<>();
 
         String[][] columns = new String[][]{
                 {"id", "TEXT PRIMARY KEY NOT NULL"},
@@ -124,7 +125,6 @@ public class Pengeluaran {
                 pengeluaranData.setJumlah(resultSet.getDouble("jumlah"));
                 pengeluaranData.setVersiData(resultSet.getString("versi"));
                 dataArrayPengeluaran.add(pengeluaranData);
-                System.out.println(pengeluaranData.getJudul());
             }
 
         }catch (SQLException e){
