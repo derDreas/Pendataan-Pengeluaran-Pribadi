@@ -3,12 +3,12 @@ package os.finance.capitalism.Database;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Pengeluaran {
-    private final String tableName = "pengeluaran";
-    private String[][] columns;
     private Kategori dbKategori;
-    
+    private ArrayList<Pengeluaran.Data> dataArrayPengeluaran;
+
     public static class Data{
         String id;
         String judul;
@@ -67,7 +67,7 @@ public class Pengeluaran {
             this.dbKategori.initDB(connection);
         }
 
-        this.columns = new String[][]{
+        String[][] columns = new String[][]{
                 {"id", "TEXT PRIMARY KEY NOT NULL"},
                 {"judul", "TEXT NOT NULL"},
                 {"deskripsi", "TEXT"},
@@ -78,12 +78,13 @@ public class Pengeluaran {
         };
 
         StringBuilder createTableSql = new StringBuilder();
-        createTableSql.append("CREATE TABLE IF NOT EXISTS ").append(this.tableName).append(" (");
+        String tableName = "pengeluaran";
+        createTableSql.append("CREATE TABLE IF NOT EXISTS ").append(tableName).append(" (");
 
-        for (int i = 0; i < this.columns.length; i++) {
+        for (int i = 0; i < columns.length; i++) {
             createTableSql.append(columns[i][0]).append(" ").append(columns[i][1]);
 
-            if (i < this.columns.length - 1)
+            if (i < columns.length - 1)
                 createTableSql.append(",\n");
         }
 
