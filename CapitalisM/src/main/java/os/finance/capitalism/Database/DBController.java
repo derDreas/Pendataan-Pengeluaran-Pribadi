@@ -40,4 +40,12 @@ public class DBController {
         }
         return 0x0;
     }
+
+    public void closeDB(){
+        try {
+            statement.close();
+            connection.close();
+        } catch (SQLException ignored) {
+        }
+    }
 }
