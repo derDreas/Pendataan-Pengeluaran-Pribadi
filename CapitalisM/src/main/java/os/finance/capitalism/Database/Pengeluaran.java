@@ -8,12 +8,20 @@ public class Pengeluaran {
     private final String tableName = "pengeluaran";
     private String[][] columns;
 
+    private Kategori dbKategori;
+
     public int initDB(Connection connection) {
+        // Blok kode inisialisasi tabel 'kategori'
+        {
+            this.dbKategori = new Kategori();
+            this.dbKategori.initDB(connection);
+        }
+
         this.columns = new String[][]{
                 {"id", "TEXT PRIMARY KEY NOT NULL"},
                 {"judul", "TEXT NOT NULL"},
                 {"deskripsi", "TEXT"},
-                {"kategori", "INTEGER FOREIGN KEY kategori(id) NOT NULL"},
+                {"kategori", "INTEGER NOT NULL REFERENCES kategori(id)"},
                 {"jumlah", "REAL CHECK (jumlah >= 0) NOT NULL"},
                 {"waktu", "INTEGER NOT NULL"},
                 {"versi", "TEXT NOT NULL"}
