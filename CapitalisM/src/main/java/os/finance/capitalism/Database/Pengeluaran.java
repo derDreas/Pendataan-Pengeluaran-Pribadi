@@ -7,8 +7,58 @@ import java.sql.Statement;
 public class Pengeluaran {
     private final String tableName = "pengeluaran";
     private String[][] columns;
-
     private Kategori dbKategori;
+    
+    public static class Data{
+        String id;
+        String judul;
+        long waktu;
+        int idKategori;
+        double jumlah;
+        String versiData;
+
+        public String getId() {
+            return id;
+        }
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getJudul() {
+            return judul;
+        }
+        public void setJudul(String judul) {
+            this.judul = judul;
+        }
+
+        public long getWaktu() {
+            return waktu;
+        }
+        public void setWaktu(long waktu) {
+            this.waktu = waktu;
+        }
+
+        public int getIdKategori() {
+            return idKategori;
+        }
+        public void setIdKategori(int idKategori) {
+            this.idKategori = idKategori;
+        }
+
+        public double getJumlah() {
+            return jumlah;
+        }
+        public void setJumlah(double jumlah) {
+            this.jumlah = jumlah;
+        }
+
+        public String getVersiData() {
+            return versiData;
+        }
+        public void setVersiData(String versiData) {
+            this.versiData = versiData;
+        }
+    }
 
     public int initDB(Connection connection) {
         // Blok kode inisialisasi tabel 'kategori'
