@@ -9,6 +9,16 @@ public class Pengeluaran {
     private String[][] columns;
 
     public int initDB(Connection connection) {
+        this.columns = new String[][]{
+                {"id", "TEXT PRIMARY KEY NOT NULL"},
+                {"judul", "TEXT NOT NULL"},
+                {"deskripsi", "TEXT"},
+                {"kategori", "INTEGER FOREIGN KEY kategori(id) NOT NULL"},
+                {"jumlah", "REAL CHECK (jumlah >= 0) NOT NULL"},
+                {"waktu", "INTEGER NOT NULL"},
+                {"versi", "TEXT NOT NULL"}
+        };
+
         StringBuilder createTableSql = new StringBuilder();
         createTableSql.append("CREATE TABLE IF NOT EXISTS ").append(this.tableName).append(" (");
 
