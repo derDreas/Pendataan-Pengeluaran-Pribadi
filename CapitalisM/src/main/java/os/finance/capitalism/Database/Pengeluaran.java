@@ -23,6 +23,5 @@ public class Pengeluaran {
 
         listString[0][1] = "versi";
         listString[0][2] = "TEXT";
-
     }
 }
