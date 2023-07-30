@@ -92,7 +92,7 @@ public class Kategori {
             }
             return bufferData;
         } catch (SQLException ignored) {
-            
+
         }
         return null;
     }

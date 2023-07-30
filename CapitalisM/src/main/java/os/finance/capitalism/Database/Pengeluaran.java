@@ -1,9 +1,6 @@
 package os.finance.capitalism.Database;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Pengeluaran {
@@ -128,6 +125,29 @@ public class Pengeluaran {
             }
 
         }catch (SQLException e){
+            return 0x1;
+        }
+        return 0x0;
+    }
+
+    public int createData(Pengeluaran.Data dataBaru) {
+        String insertSql = "INSERT INTO pengeluaran (id, judul, waktu, kategori, jumlah, versi) VALUES (?, ?, ?, ?, ?, ?);";
+
+        try {
+            PreparedStatement preparedStatement = this.connectionPointer.prepareStatement(insertSql);
+
+            // Set values for the placeholders in the prepared statement
+            preparedStatement.setString(1, dataBaru.getId());
+            preparedStatement.setString(2, dataBaru.getJudul());
+            preparedStatement.setLong(3, dataBaru.getWaktu());
+            preparedStatement.setInt(4, dataBaru.getIdKategori());
+            preparedStatement.setDouble(5, dataBaru.getJumlah());
+            preparedStatement.setString(6, dataBaru.getVersiData());
+
+            // Execute the INSERT statement
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
             return 0x1;
         }
         return 0x0;
