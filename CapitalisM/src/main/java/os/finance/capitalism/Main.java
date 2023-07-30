@@ -12,6 +12,12 @@ public class Main extends Application {
         int exitCode = dbController.initDB();
         if (exitCode != 0)
             System.exit(exitCode);
+        end(0x0);
+    }
+
+    public void end(int exitCode){
+        dbController.closeDB();
+        System.exit(exitCode);
     }
 
     public static void main(String[] args) {
