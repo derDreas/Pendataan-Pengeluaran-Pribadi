@@ -41,6 +41,10 @@ public class DBController {
         return 0x0;
     }
 
+    public Pengeluaran getDbPengeluaran(){
+        return this.dbPengeluaran;
+    }
+
     public void closeDB(){
         try {
             statement.close();

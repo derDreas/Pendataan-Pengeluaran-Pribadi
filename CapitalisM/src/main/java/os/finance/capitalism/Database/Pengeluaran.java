@@ -1,6 +1,7 @@
 package os.finance.capitalism.Database;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -83,7 +84,6 @@ public class Pengeluaran {
 
         for (int i = 0; i < columns.length; i++) {
             createTableSql.append(columns[i][0]).append(" ").append(columns[i][1]);
-
             if (i < columns.length - 1)
                 createTableSql.append(",\n");
         }
@@ -98,6 +98,36 @@ public class Pengeluaran {
             return 0x1;
         }
 
+        return 0x0;
+    }
+
+    public int readAllData(Connection connection){
+        String query = "SELECT * FROM pengeluaran;";
+        try {
+            this.dataArrayPengeluaran.clear();
+            ResultSet resultSet;
+            Statement statement;
+
+            statement = connection.createStatement();
+            statement.execute(query);
+            resultSet = statement.getResultSet();
+
+            while (resultSet.next()) {
+                Pengeluaran.Data pengeluaranData = new Pengeluaran.Data();
+
+                pengeluaranData.setId(resultSet.getString("id"));
+                pengeluaranData.setJudul(resultSet.getString("judul"));
+                pengeluaranData.setWaktu(resultSet.getLong("waktu"));
+                pengeluaranData.setIdKategori(resultSet.getInt("kategori"));
+                pengeluaranData.setJumlah(resultSet.getDouble("jumlah"));
+                pengeluaranData.setVersiData(resultSet.getString("versi"));
+                dataArrayPengeluaran.add(pengeluaranData);
+                System.out.println(pengeluaranData.getJudul());
+            }
+
+        }catch (SQLException e){
+            return 0x1;
+        }
         return 0x0;
     }
 }
