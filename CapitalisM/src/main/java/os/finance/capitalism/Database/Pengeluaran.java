@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Pengeluaran {
     private Kategori dbKategori;
     private ArrayList<Pengeluaran.Data> dataArrayPengeluaran;
-
+    private Connection  connectionPointer;
     public static class Data{
         String id;
         String judul;
@@ -66,6 +66,7 @@ public class Pengeluaran {
         {
             this.dbKategori = new Kategori();
             this.dbKategori.initDB(connection);
+            this.connectionPointer = connection;
         }
 
         String[][] columns = new String[][]{
@@ -101,14 +102,15 @@ public class Pengeluaran {
         return 0x0;
     }
 
-    public int readAllData(Connection connection){
+    public int readAllData(){
+
         String query = "SELECT * FROM pengeluaran;";
         try {
             this.dataArrayPengeluaran.clear();
             ResultSet resultSet;
             Statement statement;
 
-            statement = connection.createStatement();
+            statement = this.connectionPointer.createStatement();
             statement.execute(query);
             resultSet = statement.getResultSet();
 
