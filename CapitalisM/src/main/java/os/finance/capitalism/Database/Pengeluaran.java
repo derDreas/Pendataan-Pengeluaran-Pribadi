@@ -142,7 +142,7 @@ public class Pengeluaran {
             preparedStatement.setLong(3, dataBaru.getWaktu());
             preparedStatement.setInt(4, dataBaru.getIdKategori());
             preparedStatement.setDouble(5, dataBaru.getJumlah());
-            preparedStatement.setString(6, dataBaru.getVersiData());
+            preparedStatement.setString(6, Metadata.VERSION);
 
             // Execute the INSERT statement
             preparedStatement.executeUpdate();
