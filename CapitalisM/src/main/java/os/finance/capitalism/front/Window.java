@@ -8,4 +8,8 @@ public class Window {
     public void initStage(Stage stage){
         this.windowStage = stage;
     }
+
+    public Stage getStage(){
+        return this.windowStage;
+    }
 }
