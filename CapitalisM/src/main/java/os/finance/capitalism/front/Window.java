@@ -1,5 +1,11 @@
 package os.finance.capitalism.front;
 
-public class Stage {
-    
+import javafx.stage.Stage;
+
+public class Window {
+    Stage windowStage;
+
+    public void initStage(Stage stage){
+        this.windowStage = stage;
+    }
 }
