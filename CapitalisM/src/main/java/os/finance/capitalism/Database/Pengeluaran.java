@@ -153,4 +153,75 @@ public class Pengeluaran {
         return 0x0;
     }
 
+    public int updateData(Pengeluaran.Data dataModifikasi) {
+        String updateSql = "UPDATE pengeluaran SET judul=?, waktu=?, kategori=?, jumlah=?, versi=? WHERE id=?;";
+
+        try {
+            PreparedStatement preparedStatement = this.connectionPointer.prepareStatement(updateSql);
+
+            // Set values for the placeholders in the prepared statement
+            preparedStatement.setString(1, dataModifikasi.getJudul());
+            preparedStatement.setLong(2, dataModifikasi.getWaktu());
+            preparedStatement.setInt(3, dataModifikasi.getIdKategori());
+            preparedStatement.setDouble(4, dataModifikasi.getJumlah());
+            preparedStatement.setString(5, dataModifikasi.getVersiData());
+            preparedStatement.setString(6, dataModifikasi.getId());
+
+            // Execute the UPDATE statement
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated == 0) {
+                // If no rows were updated, it means the data with the specified id was not found
+                return 0x1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0x1;
+        }
+
+        // If the update is successful, update the dataArrayPengeluaran with the modified data
+        for (int i = 0; i < dataArrayPengeluaran.size(); i++) {
+            Pengeluaran.Data data = dataArrayPengeluaran.get(i);
+            if (data.getId().equals(dataModifikasi.getId())) {
+                dataArrayPengeluaran.set(i, dataModifikasi);
+                break;
+            }
+        }
+
+        return 0x0;
+    }
+
+    public int deleteData(String idData) {
+        String deleteSql = "DELETE FROM pengeluaran WHERE id=?;";
+
+        try {
+            PreparedStatement preparedStatement = this.connectionPointer.prepareStatement(deleteSql);
+
+            // Set the value for the placeholder in the prepared statement
+            preparedStatement.setString(1, idData);
+
+            // Execute the DELETE statement
+            int rowsDeleted = preparedStatement.executeUpdate();
+
+            if (rowsDeleted == 0) {
+                // If no rows were deleted, it means the data with the specified id was not found
+                return 0x1;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0x2;
+        }
+
+        // If the deletion is successful, remove the data with the specified id from dataArrayPengeluaran
+        for (int i = 0; i < dataArrayPengeluaran.size(); i++) {
+            Pengeluaran.Data data = dataArrayPengeluaran.get(i);
+            if (data.getId().equals(idData)) {
+                dataArrayPengeluaran.remove(i);
+                break;
+            }
+        }
+
+        return 0x0;
+    }
+
 }
